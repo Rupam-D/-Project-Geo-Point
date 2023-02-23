@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Geo Point - Find shortest path between two places</title>
+     <link rel="stylesheet" href="style.css">
+
+     <!-- //leaflet-stylesheet -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+     <!-- fontawesome -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css
+
+
+
+     ">
+
+</head>
+
+<body>
+     <section class="header">
+          <!-- <div class="headerlogo"><img id="headerlogo" src="./assets/logo/logoheader.png" alt=""></div> -->
+          <a href="#"><img src="./assets/phone-call.png" alt="">+91-55572-22231</a>
+          <a href="#"><img src="./assets/mail.png" alt="">contact@geopoint.com</a>
+     </section>
+
+     <section class="hero">
+          <div class="navbar">
+               <div class="logo"><a href=""><img class="logo" src="./assets/logo.jpg" alt=""></a></div>
+
+               <div class="item">
+
+                    <ul>
+                         <li><a href="#">Home</a></li>
+                         <li><a href="#" id="uses">Uses</a></li>
+                         <li><a href="#" id="features">Features</a></li>
+                    </ul>
+               </div>
+               <div class="btn">
+                    <a href=""><button id="visitus">Use Map<br><span id="smalltext">Find your Route</span></button></a>
+               </div>
+          </div>
+
+          <div class="background">
+               <div class="text">
+                    <h1>Find The Best Route for Your Journey...</h1>
+                    <p>We are happy to help You</p>
+                    <span><img id="navicon" src="./assets/navigate.png" alt=""></span>
+               </div>
+               <!-- <img  id="bgimg"src="./assets/bg.jpg" alt=""> -->
+          </div>
+     </section>
+
+     <section id="featuresall" class="features">
+          <h1>Our Features</h1>
+          <div class="allfet">
+               <div class="f1">
+                    <img src="./assets/measure-distance.png" alt="">
+                    <h4>Measure Shortest Path</h4>
+               </div>
+               <div class="f1">
+                    <img src="./assets/flag.png" alt="">
+                    <h4 id="f2h4">Highly Optimized</h4>
+               </div>
+               <div class="f1">
+                    <img src="./assets/accuracy.png" alt="">
+                    <h4> With 100% Accuracy</h4>
+               </div>
+          </div>
+          <!-- <div class="f2">
+               <img src="./assets/flag.png" alt="">
+          </div> -->
+     </section>
+
+     <section  id="maparea"class="maparea">
+          <div class="maptext">
+               <h1>Mark Your Source & Destination !</h1>
+               <div class="coord">
+                    <div class="sourcedest">
+                         <h4>Source</h4>
+                         <input type="text" name="lat" value="" id="source" placeholder="latitude/longitude" max="500"
+                              readonly>
+                         <h4>Destination</h4>
+                         <input type="text" name="lat" id="dest" placeholder="latitude/longitude" readonly>
+                    </div>
+                    <div class="dbtn"><img id="directbtn" src="./assets/direction.png" alt=""></div>
+                    <div class="fscreen"><img id="fullscreen"src="./assets/zoom.gif" alt="">
+                    <span>FullScreen View</span></div>
+               </div>
+               <!-- <div class="directbtn">
+                    <img id="directbtn"src="./assets/direction.png" alt="">
+               </div> -->
+               <!-- <p>Source </p> -->
+          </div>
+          <div class="mapcontainer">
+               <div class="map" id="map" oncontextmenu="return false">
+               </div>
+
+
+          </div>
+     </section>
+
+     <section id="howtouse">
+          <!-- <h1 id="headingmain">How To Use</h1> -->
+          <div class="formobile">
+               <h1 id="mobh1">In Mobile</h1>
+               <p>Tap to mark your Source point and Hold to mark Destination.Use direction button to get the shortest possible path. Use FullScreen View for better experiences.</p>
+          </div>
+          <div  id="line"  class="line"><span></span></div>
+          <div class="forpc">
+               <h1 id="pch1">In Pc</h1>
+               <p>Use Left Click to mark Source point and use Right Click to mark Destination. Click on direction button to get direction. Use FullScreen View for better experiences.</p>
+          </div>
+          </div>
+     </section>
+
+     <section class="footer" id="footer">
+          <div class="row">
+               <div class="coloum">
+                    <img src="./assets/logo/gplogo.png" alt="" id="logopng">
+                    <p>GeoPoint-A map location service</p>
+                    <p></p>
+               </div>
+               <div class="coloum">
+                    <h3>Team List <div class="underline"><span></span></div></h3>
+                    <p>Rupam Das</p>
+                    <p>Pranay Bhowmik</p>
+                    <p>Pritam Nandi</p>
+                    <p>Prateek Das</p>
+                    <!-- <p></p> -->
+               </div>
+               <div class="coloum">
+                    <h3>Links<div class="underline"><span></span></h3>
+                    <ul>
+                         <div class="socials">
+                         <a href="https://www.instagram.com/imrupam_das/"><i class="fai fa-brands fa-instagram"></i></a>
+                         <a href="https://twitter.com/imRupam_D"><i class="fai fa-brands fa-twitter"></i></a>
+                         <a href="https://github.com/Rupam-D"><i class="fai fa-brands fa-github"></i></a>
+                         </div>
+                         
+                         <!-- <li><a href="">Home</a></li>
+                         <li><a href="">Services</a></li>
+                         <li><a href="">About Us</a></li>
+                         <li><a href="">Features</a></li>
+                         <li><a href="">Contacts</a></li> -->
+                         <!-- <li><a href=""></a></li> -->
+                    </ul>
+               </div>
+               <div class="coloum">
+                    <h3>Contribute<div class="underline"><span></span></h3>
+                    <form>
+                         <i class="fa-regular fa-envelope far"></i>
+                         <input type="email" name="" placeholder="Enter your email" required id="">
+                         <button type="submit"><i class="fa-solid fas fa-arrow-right"></i></button>
+                    </form>
+                    <!-- <div class="socials">
+                         <a href="https://www.instagram.com/imrupam_das/"><i class="fai fa-brands fa-instagram"></i></a>
+                         <a href="https://twitter.com/imRupam_D"><i class="fai fa-brands fa-twitter"></i></a>
+                         <a href="https://github.com/Rupam-D"><i class="fai fa-brands fa-github"></i></a>
+                         <a href="mailto:projects.rupam@gmail.com"><i class=" fai fa-solid fa-envelope"></i></a>
+                    </div> -->
+               </div>
+          </div>
+          <hr>
+          <p class="copyright">Designed by RupamDas © 2023 - All Rights Reserved  </p>
+
+     </section>
+
+</body>
+
+<!-- leaflet Js cdn -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+<!-- app.js -->
+<script src="app.js"></script>
+
+</html>
