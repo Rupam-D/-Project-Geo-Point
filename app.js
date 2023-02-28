@@ -1,8 +1,8 @@
 //selectors
 const sourcelatlng = document.getElementById("source")
 const destlatlng = document.getElementById("dest")
-const showdirection=document.getElementById("directbtn")
-const fullscr=document.getElementById("fullscreen")
+const showdirection = document.getElementById("directbtn")
+const fullscr = document.getElementById("fullscreen")
 //map
 var map = L.map('map').setView([22.675916849036845, 88.37859442454632], 10);
 
@@ -25,8 +25,10 @@ let myIcon2 = L.icon({
 })
 
 let marker1 = L.marker([22.675916849036845, 88.37859442454632], { icon: myIcon1, draggable: true })
-marker1.addTo(map)
+// marker1.addTo(map)
 
+// var slat_actual;
+// var slng_actual;
 
 map.on("click",(s)=>{
      console.log(s)
@@ -51,52 +53,148 @@ map.on("contextmenu",(d)=>{
 })
 
 //Routing
-showdirection.addEventListener("click",(sd)=>{
+showdirection.addEventListener("click", (sd) => {
      console.log(sd)
      // marker2.remove()
      destmarker.remove()
      L.Routing.control({
           waypoints: [
-               L.latLng(slat_actual,slng_actual),
+               L.latLng(slat_actual, slng_actual),
                // L.latLng[(slat_actual,slng_actual],{icon:myIcon2}),
-               L.latLng(dlat_actual,dlng_actual)
+               L.latLng(dlat_actual, dlng_actual)
           ]
-     }).on('routesfound', (e)=>{
+     }).on('routesfound', (e) => {
           console.log(e)
           e.routes[0].coordinates
-          .forEach((coordinates,index) => {
-               setTimeout(()=>{
-               marker2.setLatLng([coordinates.lat, coordinates.lng])},90*index)
-          });
+               .forEach((coordinates, index) => {
+                    setTimeout(() => {
+                         marker2.setLatLng([coordinates.lat, coordinates.lng])
+                    }, 90 * index)
+               });
      }).addTo(map);
 
 })
 
 //Mapscaling
-L.control.scale({position:'bottomright'}).addTo(map)
+L.control.scale({ position: 'bottomright' }).addTo(map)
 
 //fullscreen
-fullscr.addEventListener("click",(fs)=>{
+fullscr.addEventListener("click", (fs) => {
      fs.preventDefault()
-     mapID=document.getElementById("map")
+     mapID = document.getElementById("map")
      mapID.requestFullscreen()
 
 })
 // 
 
-document.getElementById("uses").addEventListener("click",e=>{
+document.getElementById("uses").addEventListener("click", e => {
      e.preventDefault()
-     location.href="#howtouse"
+     location.href = "#howtouse"
 })
-document.getElementById("features").addEventListener("click",e=>{
+document.getElementById("features").addEventListener("click", e => {
      e.preventDefault()
-     location.href="#featuresall"
+     location.href = "#featuresall"
 })
-document.getElementById("visitus").addEventListener("click",e=>{
+document.getElementById("visitus").addEventListener("click", e => {
      e.preventDefault()
-     location.href="#maparea"
+     location.href = "#maparea"
 })
 
+
+// 27feb,23
+
+// map.setView([slat_actual, slng_actual], 14);
+
+// API
+const apiKey = "AAPKb9c96aa1935b473da9891691057267f5UuCJcSINB94njisgcQm8qRn_KFyU2W7X4bnPDUP0i-XKSmt3eZnwpWmpmiwcFn4n";
+// const basemapEnum = "ArcGIS:Navigation";
+// ersi map
+// L.esri.Vector.vectorBasemapLayer(googleStreets, {
+//      apiKey: apiKey
+// // }).addTo(map);
+
+// control
+L.Control.PlacesSelect = L.Control.extend({
+     onAdd: function (map) {
+
+          const placeCategories = [
+               ["", "Choose a category..."],
+               // ["Coffee shop", "Coffee shop"],
+               ["Gas station", "Gas station"],
+               ["Food", "Food"],
+               ["Hospital", "Hospital"],
+               ["Police Station", "Police Station"],
+               ["Fire Station", "Fire Station"]
+               // ["Parks and Outdoors", "Parks and Outdoors"]
+          ];
+
+          const select = L.DomUtil.create("select", "");
+          select.setAttribute("id", "optionsSelect");
+          select.setAttribute("style", "font-size: 16px;padding:4px 8px;");
+
+          placeCategories.forEach((category) => {
+               let option = L.DomUtil.create("option");
+               option.value = category[0];
+               option.innerHTML = category[1];
+               select.appendChild(option);
+          });
+
+          return select;
+     },
+
+     onRemove: function (map) {
+          // Nothing to do here
+     }
+});
+
+L.control.placesSelect = function (opts) {
+     return new L.Control.PlacesSelect(opts);
+};
+
+L.control.placesSelect({
+     position: "topright"
+}).addTo(map);
+
+// layer
+const layerGroup = L.layerGroup().addTo(map);
+// console.log(slat_actual,slng_actual)
+
+// 
+function showPlaces(category) {
+
+     L.esri.Geocoding
+          .geocode({
+               apikey: apiKey
+          })
+          .category(category)
+          .nearby(map.getCenter(), 10)
+
+          .run(function (error, response) {
+               if (error) {
+                    return;
+               }
+
+               layerGroup.clearLayers();
+
+               response.results.forEach((searchResult) => {
+                    L.marker(searchResult.latlng)
+                         .addTo(layerGroup)
+                         .bindPopup(`<b>${searchResult.properties.PlaceName}</b></br>${searchResult.properties.Place_addr}`);
+               });
+
+          });
+
+}
+
+const select = document.getElementById("optionsSelect");
+select.addEventListener("change", () => {
+     if (select.value !== "") {
+          showPlaces(select.value);
+     }
+});
+
+// location
+L.control.locate().addTo(map);
 
 
 //lat lng display
